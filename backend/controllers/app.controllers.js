@@ -44,25 +44,39 @@ module.exports.getTodoById = async (req, res) => {
 };
 
 module.exports.editTodo = async (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (!title || !content || !id) {
-    res.status(400).json({ message: "Bad requiest" });
+  const keys = Object.keys(req.body);
+  const values = Object.values(req.body);
+  const lastid = keys.length + 1;
+  values.push(id);
+
+  let request_body = "";
+
+  for (let i = 0; i < keys.length; i++) {
+    request_body += `${keys[i].toUpperCase()}=$${i + 1},`;
+  }
+
+  if (request_body.endsWith(",")) {
+    request_body = request_body.slice(0, -1);
   }
 
   try {
-    const result = await pool.query(
-      `UPDATE Todo SET title=$1, content=$2 WHERE id=$3 RETURNING *`,
-      [title, content, id]
-    );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Todo not found" });
+    const CHECK = await pool.query("SELECT * FROM Todo WHERE ID=$1", [id]);
+    if (CHECK.rows[0].length !== 0) {
+      const RESULT = await pool.query(
+        `UPDATE Todo SET ${request_body} WHERE ID=$${lastid} RETURNING *`,
+        values
+      );
+      return res
+        .status(200)
+        .json({ message: "Request success", content: RESULT.rows });
+    } else {
+      return res.status(400).json({ message: "Not found" });
     }
-    res.json({ message: "Todo is updated", content: result.rows[0] });
   } catch (err) {
-    res.status(500).json({ message: "Internal Server Error " + err.message });
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 

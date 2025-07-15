@@ -6,12 +6,12 @@ const {
   editTodo,
   deleteTodo,
 } = require("../controllers/app.controllers");
-const route = express.Router();
+const router = express.Router();
 
-route.get("/api", getAllTodos);
-route.post("/api/create", createTodo);
-route.get("/api/get/:id", getTodoById);
-route.put("/api/edit/:id", editTodo);
-route.delete("/api/delete/:id", deleteTodo);
+router.get("/all", getAllTodos);
+router.get("/find/:id", getTodoById);
+router.post("/add", createTodo);
+router.patch("/edit/:id", editTodo);
+router.delete("/delete/:id", deleteTodo);
 
-module.exports = route;
+module.exports = router;

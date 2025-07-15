@@ -7,7 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/", require("./routes/app.routes"));
+app.use("/todo", require("./routes/app.routes"));
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running");
