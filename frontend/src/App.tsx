@@ -1,16 +1,28 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dash from "./components/custom/Dash";
 import Header from "./components/custom/Header";
+import Add from "./components/custom/Add";
 
 export default function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <>
+          <Header />
+          <Dash />
+        </>
+      ),
+    },
+    {
+      path: "/add",
+      element: <Add />,
+    },
+  ]);
+
   return (
     <>
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dash />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router}></RouterProvider>
     </>
   );
 }
