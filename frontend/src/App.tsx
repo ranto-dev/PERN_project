@@ -3,28 +3,36 @@ import Dash from "./components/custom/Dash";
 import Header from "./components/custom/Header";
 import AddForm from "./components/custom/AddForm";
 import EditForm from "./components/custom/EditForm";
+import { useEffect, useState } from "react";
+
+export type Todo = {
+  id: number;
+  title: string;
+  content: string;
+};
+
+export type TodosType = {
+  content: Todo[];
+};
 
 export default function App() {
-  const TODOS = [
-    {
-      id: 1,
-      title: "title 1",
-      description: "ceci est la description 1",
-      completed: true,
-    },
-    {
-      id: 2,
-      title: "title 2",
-      description: "ceci est la description 2",
-      completed: true,
-    },
-    {
-      id: 3,
-      title: "title 3",
-      description: "ceci est la description 3",
-      completed: true,
-    },
-  ];
+  const [todos, setTodos] = useState<Todo[]>([]);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`http://${window.location.hostname}:3000/todo/all`, {
+      method: "GET",
+      signal: controller.signal,
+    })
+      .then((response) => response.json() as Promise<TodosType>)
+      .then((response) => setTodos(response.content))
+      .catch((err) => console.error(err));
+    return () => {
+      controller.abort();
+    };
+  }, []); 
+
+  console.log("Todo ---");
+  console.log(todos);
 
   const router = createBrowserRouter([
     {
@@ -32,7 +40,7 @@ export default function App() {
       element: (
         <>
           <Header />
-          <Dash todos={TODOS} />
+          <Dash todos={todos} />
         </>
       ),
     },
@@ -42,7 +50,7 @@ export default function App() {
     },
     {
       path: "/edit/:id",
-      element: <EditForm todos={TODOS} />,
+      element: <EditForm todos={todos} />,
     },
   ]);
 

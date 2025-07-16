@@ -1,25 +1,19 @@
+import type { Todo } from "@/App";
 import CardTodo from "./Card";
 
-export type todo = {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean 
+export type TodoListProps = {
+  todos: Todo[];
 };
 
-export type TodosType = {
-  todos: todo[];
-};
-
-export default function Dash(props: TodosType) {
+export default function Dash({ todos }: TodoListProps) {
   return (
-    <div className="p-5 flex flex-col gap-2 m-auto max-w-200">
-      {props.todos.map((todo) => {
+    <div className="p-5 h-150 scroll-auto flex flex-col gap-2 m-auto max-w-200 bg-amber-300">
+      {todos.map((todo) => {
         return (
           <CardTodo
             id={todo.id}
             title={todo.title}
-            description={todo.description}
+            content={todo.content}
           />
         );
       })}

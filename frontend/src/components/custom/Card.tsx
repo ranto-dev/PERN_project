@@ -14,28 +14,28 @@ import { Link } from "react-router-dom";
 type CardTodoType = {
   id: number;
   title: string;
-  description: string;
+  content: string;
 };
 
-export default function CardTodo(props: CardTodoType) {
+export default function CardTodo({id, title, content}: CardTodoType) {
   const handleAlert = (id: number) => {
     alert(`Are you sur to delete this Todo n° ${id} ?`);
   };
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{props.title}</CardTitle>
+        <CardTitle>{title}</CardTitle>
         <CardAction>
           <div className="flex gap-1.5">
-            <Link to={`/edit/${props.id}`}>
+            <Link to={`/edit/${id}`}>
               <GrEdit />
             </Link>
-            <BiSolidTrash onClick={() => handleAlert(props.id)} />
+            <BiSolidTrash onClick={() => handleAlert(id)} />
           </div>
         </CardAction>
       </CardHeader>
       <CardContent className="flex gap-2.5">
-        <CardDescription>{props.description}</CardDescription>
+        <CardDescription>{content}</CardDescription>
         <MdCheckCircle />
       </CardContent>
     </Card>

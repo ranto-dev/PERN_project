@@ -3,11 +3,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "../ui/button";
 import { useNavigate, useParams } from "react-router-dom";
-import type { TodosType } from "./Dash";
+import type { TodoListProps } from "./Dash";
 
-export default function EditForm(props: TodosType) {
+export default function EditForm({ todos }: TodoListProps) {
   const { id } = useParams();
-  const todo = props.todos.find((todo) => todo.id.toString() === id);
+  const todo = todos.find((todo) => todo.id.toString() === id);
   console.log(todo);
   const navigate = useNavigate();
   const handleBack = () => {
@@ -35,7 +35,7 @@ export default function EditForm(props: TodosType) {
           <Textarea
             placeholder="Type description here ..."
             id="description"
-            value={todo?.description}
+            value={todo?.content}
           />
         </div>
         <div>
