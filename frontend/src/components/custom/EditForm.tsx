@@ -2,10 +2,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
-import type { CardTodoType } from "./Card";
+import { useNavigate, useParams } from "react-router-dom";
+import type { TodosType } from "./Dash";
 
-export default function EditForm(props: CardTodoType) {
+export default function EditForm(props: TodosType) {
+  const { id } = useParams();
+  const todo = props.todos.find((todo) => todo.id.toString() === id);
+  console.log(todo);
   const navigate = useNavigate();
   const handleBack = () => {
     navigate("/");
@@ -23,16 +26,16 @@ export default function EditForm(props: CardTodoType) {
           <Label htmlFor="title">Title</Label>
           <Input
             placeholder="Type title here ..."
-            value={props.title}
             id="title"
+            value={todo?.title}
           />
         </div>
         <div>
           <Label htmlFor="description">Description</Label>
           <Textarea
             placeholder="Type description here ..."
-            value={props.description}
             id="description"
+            value={todo?.description}
           />
         </div>
         <div>

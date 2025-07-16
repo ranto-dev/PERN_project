@@ -11,7 +11,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdCheckCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-export type CardTodoType = {
+type CardTodoType = {
   id: number;
   title: string;
   description: string;

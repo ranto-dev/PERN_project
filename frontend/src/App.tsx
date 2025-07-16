@@ -25,7 +25,7 @@ export default function App() {
       completed: true,
     },
   ];
-  
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -42,7 +42,7 @@ export default function App() {
     },
     {
       path: "/edit/:id",
-      element: <EditForm />,
+      element: <EditForm todos={TODOS} />,
     },
   ]);
 

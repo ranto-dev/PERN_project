@@ -1,13 +1,13 @@
 import CardTodo from "./Card";
 
-type todo = {
+export type todo = {
   id: number;
   title: string;
   description: string;
   completed: boolean 
 };
 
-type TodosType = {
+export type TodosType = {
   todos: todo[];
 };
 
