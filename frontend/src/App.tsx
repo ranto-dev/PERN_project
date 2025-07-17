@@ -29,10 +29,7 @@ export default function App() {
     return () => {
       controller.abort();
     };
-  }, []); 
-
-  console.log("Todo ---");
-  console.log(todos);
+  }, []);
 
   const router = createBrowserRouter([
     {

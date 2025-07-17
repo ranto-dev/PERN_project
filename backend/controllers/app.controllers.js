@@ -9,25 +9,26 @@ module.exports.getAllTodos = async (req, res) => {
   }
 };
 
-module.exports.createTodo = async (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
+module.exports.createTodo = (req, res) => {
+  const { title, content } = req.body;
 
   if (!title || !content) {
     res.status(400).json({ message: "Bad requiest" });
   }
 
-  try {
-    const result = await pool.query(
-      `INSERT INTO Todo(title, content) VALUES($1, $2) RETURNING *`,
-      [title, content]
-    );
-    res
-      .status(200)
-      .json({ message: "Todo is created", content: result.rows[0] });
-  } catch (err) {
-    res.status(500).json({ message: "Internal Server Error " + err.message });
-  }
+  res.status(200).json({ content: { title, content } });
+
+  // try {
+  //   const result = await pool.query(
+  //     `INSERT INTO Todo(title, content) VALUES($1, $2) RETURNING *`,
+  //     [title, content]
+  //   );
+  //   res
+  //     .status(200)
+  //     .json({ message: "Todo is created", content: result.rows[0] });
+  // } catch (err) {
+  //   res.status(500).json({ message: "Internal Server Error " + err.message });
+  // }
 };
 
 module.exports.getTodoById = async (req, res) => {
