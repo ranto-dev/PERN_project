@@ -8,7 +8,7 @@ export default function Header() {
     navigate("/add");
   };
   return (
-    <div className="p-3 max-w-250 m-auto">
+    <div className="p-3 max-w-250 m-auto border-b-0 shadow mb-5">
       <div className="flex justify-between">
         <div>
           <h1>Todo</h1>

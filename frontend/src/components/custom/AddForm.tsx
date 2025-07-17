@@ -3,7 +3,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
-import { FaCircleCheck } from "react-icons/fa6";
+import { FaReply } from "react-icons/fa6";
+import { IoMdSave } from "react-icons/io";
 import { type FormEvent } from "react";
 
 export default function AddForm() {
@@ -28,19 +29,25 @@ export default function AddForm() {
 
     fetch(`http://localhost:3000/todo/add`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(body),
     })
       .then((response) => response.json())
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
     event.currentTarget.reset();
-    //navigate("/");
+    navigate("/");
   };
 
   return (
     <div className="p-2">
       <div>
-        <Button onClick={handleBack}>Back</Button>
+        <Button onClick={handleBack}>
+          <FaReply />
+          Back
+        </Button>
       </div>
       <form
         onSubmit={(event) => handleSubmit(event)}
@@ -63,7 +70,7 @@ export default function AddForm() {
         </div>
         <div>
           <Button type="submit">
-            <FaCircleCheck />
+            <IoMdSave />
             Save
           </Button>
         </div>
